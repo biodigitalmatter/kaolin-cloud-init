@@ -56,19 +56,17 @@ packages:
   - avahi-daemon
   - build-essential
   - python3-catkin-tools
-  - python3-rosdep2
-  - python3-rosinstall
-  - python3-rosinstall-generator
+  - python3-rosdep
   - python3-vcstool
   - ros-noetic-desktop-full
+  - python-is-python3
 
-# TODO: Replace tailscale authkey!!
 runcmd:
   - sed -i '/PermitRootLogin/d' /etc/ssh/sshd_config
   - echo "PermitRootLogin no" >> /etc/ssh/sshd_config
   - systemctl restart sshd
-  - ['sh', '-c', 'curl -fsSL https://tailscale.com/install.sh | sh']
-  - ['tailscale', 'up', '--authkey=tskey-abcdef1432341818']
+  - curl -s https://install.zerotier.com | bash
+  - zerotier-cli join 272f5eae1622d723
   - rosdep init
 
 package_update: true
